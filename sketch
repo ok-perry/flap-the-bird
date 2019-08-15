@@ -1,0 +1,41 @@
+var Bird;
+var pipes = [];
+
+function setup() {
+  createCanvas(600, 480);
+  bird = new Bird();//this our new bird 
+  pipes.push(new Pipe());//pipe
+}
+//begin to draw object
+function draw() {
+  background(0);//follow in rgb
+  
+  //create the pipe and than delete the pipe when it goes off screen
+  for (var i = pipes.length-2; i >= 0; i--)//start pipe loop
+  {
+    pipes[i].show();
+    pipes[i].update();
+    
+    if (pipes[i].hits(bird))
+    {
+      console.log("Hit");
+    }
+    
+    if (pipes[i].offscreen())
+    {
+      pipes.splice(i,1);
+    }
+  }
+  bird.update();
+  bird.show();
+  if(frameCount % 60 == 0) {//this will make the pipe move it won't move if the player press puase
+    pipes.push(new Pipe());
+  } 
+  
+}
+
+  function keyPressed(){//make the bird go up like a jump
+    if (key == ' ') {
+      bird.up();
+    }
+  } 
